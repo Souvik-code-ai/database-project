@@ -32,17 +32,17 @@ const Header = () => {
         <div className='w-full  flex flex-row justify-center my-3'>
             <header id="header" className='flex flex-row justify-between items-center  fixed bg-amber-50 top-0 py-4 min-[375px]:w-[95%] min-[414px]:w-[99%] min-[344px]:w-[90%] min-[853px]:w-[98%] min-[683px]:w-[98%] min-[414px]:px-3 min-[763px]:w-[98%] min-[763px]:pr-6 min-[768px]:w-[98%] min-[768px]:px-2'>
                 <div id="logo" className='flex flex-row justify-center items-center'>
-                    <div id='image'><img src={logo} alt="" className='w-15 h-auto rounded-2xl' /></div>
-                    <div id='title' className='text-3xl font-medium bg-linear-to-br from-blue-500 to-purple-600 bg-clip-text text-transparent  text-shadow-md mx-2'>Technofi</div>
+                    <div id='image' className="cursor-pointer"><img src={logo} alt="" className='w-15 h-auto rounded-2xl' /></div>
+                    <div id='title' className='cursor-pointer text-3xl font-medium bg-linear-to-br from-blue-500 to-purple-600 bg-clip-text text-transparent  text-shadow-md mx-2 '>Technofi</div>
                 </div>
-                <div id="navbar" className='min-[763px]:flex flex-row justify-around items-center gap-6 hidden min-[763px]:gap-1
+                <nav id="navbar" className='min-[763px]:flex flex-row justify-around items-center gap-6 hidden min-[763px]:gap-1
                 min-[768px]:gap-4 min-[853px]:gap-6'>
                     <Navbarbutton option={"Home"} endpoint={"/"} />
                     <Navbarbutton option={"User"} endpoint={"/users"} />
                     <Navbarbutton option={"Modify"} endpoint={"/modify"} />
 
 
-                </div>
+                </nav>
                 <div className='min-[763px]:hidden flex rounded-full cursor-pointer' onClick={handleNavbarLogo} ref={navBarButton}><img src={Navbarlogo} alt="" className='h-6 w-6' /></div>
 
 

@@ -7,7 +7,7 @@ interface NavbarbuttonUser{
 }
 const Navbarbutton = ({option,endpoint,functionName}:NavbarbuttonUser) => {
   return (
-    <Link to={endpoint}><div id="home" className='text-gray-700 hover:text-blue-600 text-xl md:text-2xl cursor-pointer' onClick={functionName}>{option}</div></Link>
+    <Link to={endpoint}><nav id="home" className='text-gray-700 hover:text-blue-600 text-xl md:text-2xl cursor-pointer' onClick={functionName}>{option}</nav></Link>
     
    
   )
@@ -19,7 +19,7 @@ interface smallNavbarbuttonUser{
 }
 const SmallNavbarbutton = ({option,endpoint}:smallNavbarbuttonUser) => {
   return (
-    <Link to={endpoint}><div id="home" className='text-white text-md p-5 hover:text-xl cursor-pointer'>{option}</div></Link>
+    <Link to={endpoint}><nav id="home" className='text-white text-md p-5 hover:text-xl cursor-pointer'>{option}</nav></Link>
     
    
   )
