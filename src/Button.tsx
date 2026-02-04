@@ -1,11 +1,25 @@
-import React from 'react'
+import  { forwardRef } from "react";
 
-const Button = ({title}) => {
-  return (
-    <div>
-            <button className='bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 rounded-2xl cursor-pointer text-amber-50 text-center text-3xl '>{title}</button>
-    </div>
-  )
+interface ButtonProps {
+  title: string;
+  functionName?: () => void;
+  style?: string;
 }
 
-export default Button
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ title, functionName, style }, ref) => {
+    return (
+      <div>
+        <button
+          className={style}
+          onClick={functionName}
+          ref={ref}
+        >
+          {title}
+        </button>
+      </div>
+    );
+  }
+);
+
+export default Button;
