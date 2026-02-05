@@ -39,7 +39,7 @@ const Header = () => {
                 min-[768px]:gap-4 min-[853px]:gap-6'>
                     <Navbarbutton option={"Home"} endpoint={"/"} />
                     <Navbarbutton option={"User"} endpoint={"/users"} />
-                    <Navbarbutton option={"Modify"} endpoint={"/modify"} />
+                    {/* <Navbarbutton option={"Modify"} endpoint={"/modify"} /> */}
 
 
                 </nav>
@@ -52,7 +52,7 @@ const Header = () => {
                 <div>
                     <SmallNavbarbutton option={"Home"} endpoint={"/"} />
                     <SmallNavbarbutton option={"User"} endpoint={"/users"} />
-                    <SmallNavbarbutton option={"Modify"} endpoint={"/modify"} />
+                    {/* <SmallNavbarbutton option={"Modify"} endpoint={"/modify"} /> */}
                     <SmallNavbarbutton option={"Log In"} endpoint={"/login"} />
                 </div>
                 <div className='max-[763px]:flex hidden rounded-full cursor-pointer absolute right-2 top-2' onClick={handleCrossLogo} ><img src={CloseLogo} alt="" className='h-4 w-4' /></div>
