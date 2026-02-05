@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Button from './Button'
 import Heading from './Heading'
 import Description from './Description'
+
 // import { url } from 'inspector'
 const Users = () => {
     interface User {
@@ -17,6 +18,7 @@ const Users = () => {
   const [name,setName]=useState<string>("");
   const [email,setEmail]=useState<string>("");
   const [contact,setContact]=useState<string>("");
+
   const getConfig = {
     url: "https://6981a2a6c9a606f5d4475ec2.mockapi.io/users",
     method: "get"
@@ -53,7 +55,16 @@ const Users = () => {
  
  }
  async function handleSubmitButton(e: React.MouseEvent<HTMLButtonElement>):Promise<void> {
+  e.preventDefault();
+  console.log(name);
+  console.log(email);
+  console.log(contact);
+  if(name==="" && email==="" && contact===""){
+    alert("Name or Email or Contact can never be blank.");
+    return;
+  }
   console.log(e);
+  console.log(postData);
   const postconfig={
     url:"https://6981a2a6c9a606f5d4475ec2.mockapi.io/users",
     method:"post",
@@ -62,28 +73,90 @@ const Users = () => {
   }
   const postResponseData=await axios(postconfig);
   console.log(postResponseData.data);
+  setName("");
+  setEmail("");
+  setContact("");
+  handleUserButton();
 
   
  }
- function handleInputChange(e:React.ChangeEvent<HTMLButtonElement>):void{
+ function handleInputChange(e:React.ChangeEvent<HTMLInputElement>):void{
   // console.log(e);
   console.log(e.target.name);
   console.log(e.target.value);
+
+      console.log(postData);
+  // const newValue:string=e.target.value;
   if((e.target.name)==="name"){
     setName(e.target.value);
-    setPostData({...postData,[e.target.name]:name})
+       setPostData((postData)=>{
+      const newPostData={...postData,[e.target.name]:e.target.value};
+      // console.log(newPostData);
+      // console.log(postData);
+      return newPostData;
+    });
+   
   }
   else if((e.target.name)==="email"){
     setEmail(e.target.value);
-    setPostData({...postData,[e.target.name]:email})
+       setPostData((postData)=>{
+      const newPostData={...postData,[e.target.name]:e.target.value};
+      // console.log(newPostData);
+      // console.log(postData);
+      return newPostData;
+    });
   }
   else if((e.target.name)==="contact"){
     setContact(e.target.value);
-    setPostData({...postData,[e.target.name]:contact})
+       setPostData((postData)=>{
+      const newPostData={...postData,[e.target.name]:e.target.value};
+      // console.log(newPostData);
+      // console.log(postData);
+      return newPostData;
+    });
   }
-  console.log(postData);
+  // console.log(postData);
+
  }
+ async function handleDeleteButton(items:User){
+  const deleteConfig={
+    url:`https://6981a2a6c9a606f5d4475ec2.mockapi.io/users/${items.id}`,
+    method:"delete",
   
+  }
+  const deleteResponse=await axios(deleteConfig);
+  console.log(deleteResponse);
+  handleUserButton();
+ }
+  function handleEditButton(items:User){
+    setName(items.name);
+    setEmail(items.email);
+    setContact(items.contact);
+    localStorage.setItem("id", items.id);
+
+  
+ }
+ async function handleCommitChange(){
+  const id=localStorage.getItem("id");
+  if(!id){
+    return;
+        
+  }
+  const putData = { name: name, email: email,contact:contact };
+    const putConfig={
+    url:`https://6981a2a6c9a606f5d4475ec2.mockapi.io/users/${id}`,
+    method:"put",
+    data:putData
+  
+  }
+  const putResponse=await axios(putConfig);
+  console.log(putResponse);
+  setName("");
+  setEmail("");
+  setContact("");
+  handleUserButton();
+
+ }
  
 
   return (
@@ -92,6 +165,13 @@ const Users = () => {
         <Heading style={'bg-linear-to-br from-blue-500 to-purple-600 bg-clip-text text-transparent  text-shadow-md min-[1080px]:text-6xl flex flex-row justify-center items-center text-center mx-5 min-[380px]:text-4xl text-3xl'} headingTitle={"User Credentials"} />
        <Description style={'text-gray-500 min-[1080px]:text-5xl min-[380px]:text-3xl text-md text-center'} description={"This application is designed to collect, store, and manage user data securely. It supports structured data entry, efficient storage, and seamless access to information for reliable data management."}/>
         <Button title={"Add User"}   style={'bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 rounded-2xl cursor-pointer text-amber-50 text-center text-2xl my-5'} functionName={handleAddUser} ref={refAddUserButton}/>
+
+      </div>
+      <div className='flex flex-col justify-between items-center space-y-3 w-[80%]'>
+         <input type="text" placeholder='Enter Name' name='name' className='rounded-2xl w-[30%] h-12 p-5 min-[375px]:w-[80%] min-[344px]:w-[80%] hover:border-2 ' value={name} onChange={handleInputChange}/>
+        <input type="text" placeholder='Enter Email Address' name='email' className='rounded-2xl w-[30%] h-12 p-5 min-[375px]:w-[80%] min-[344px]:w-[80%] hover:border-2  ' value={email} onChange={handleInputChange}/>
+        <input type="text" placeholder='Enter Contact No' name='contact' value={contact} className='rounded-2xl w-[30%] h-12 p-5 min-[375px]:w-[80%] min-[344px]:w-[80%] hover:border-2 ' onChange={handleInputChange}/>
+          <Button title={"Commit Changes"}  style={'bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 px-8 rounded-2xl cursor-pointer text-amber-50 text-center text-2xl my-5'} functionName={()=>handleCommitChange()}/>
 
       </div>
       {/* <p>{handleUserButton()}</p> */}
@@ -103,8 +183,8 @@ const Users = () => {
               <p className='text-2xl text-gray-600'><b>Email Address:</b>{items.email}</p>
               <p className='text-2xl text-gray-600'><b>Contact No:</b>{items.contact}</p>
               <div className='flex flex-row justify-around items-center gap-4'>
-                <Button title={"Edit"}  style={'bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 px-8 rounded-2xl cursor-pointer text-amber-50 text-center text-2xl my-5'} />
-                <Button title={"Delete"}  style={'bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 rounded-2xl cursor-pointer text-amber-50 text-center text-2xl my-5'} />
+                <Button title={"Edit"}  style={'bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 px-8 rounded-2xl cursor-pointer text-amber-50 text-center text-2xl my-5'} functionName={()=>handleEditButton(items)}/>
+                <Button title={"Delete"}  style={'bg-linear-to-br from-blue-500 to-purple-600 flex flex-row justify-center items-center p-3 rounded-2xl cursor-pointer text-amber-50 text-center text-2xl my-5'} functionName={()=>handleDeleteButton(items)} />
               </div>
             </div>
           )
